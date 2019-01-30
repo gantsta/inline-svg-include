@@ -10,7 +10,7 @@
  * @return		string		$markup			Inline HTML markup for the SVG file.
  * @author		gantsta
  */
-function PS_get_inline_svg($filename, $classes='', $rel_path='/img/svg/', $abs_path=''){
+function AJG_get_inline_svg($filename, $classes='', $rel_path='/img/svg/', $abs_path=''){
 	$file_path = ( $abs_path != '' ? $abs_path : get_stylesheet_directory() . $rel_path );
 	$file_path .= $filename;
 	$markup = '';
