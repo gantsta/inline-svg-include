@@ -17,7 +17,7 @@ function PS_get_inline_svg($filename, $classes='', $rel_path='/img/svg/', $abs_p
 	$markup = '';
 
 	if ( file_exists($file_path) ):
-		$css = ( $classes != '' ? 'svg-icon ' . $classes : 'svg-icon' );
+		$css = ( $classes != '' ? 'inline-svg ' . $classes : 'inline-svg' );
 		ob_start();
 		?>
 			<span class="<?php echo $css; ?>">
