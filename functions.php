@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Gets markup to render an SVG icon
+ * Gets markup to render an SVG file
  *
  * @param		string		$filename		The filename of the SVG file to render. Must include the .svg suffix.
  * @param		string		$classes		Space-separated list of CSS class names to add to the SVG's enclosing <span> tag.
