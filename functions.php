@@ -16,10 +16,26 @@ function AJG_get_inline_svg($filename, $classes='', $rel_path='/img/svg/', $abs_
 	$markup = '';
 
 	if ( file_exists($file_path) ):
+		$xml = file_get_contents($file_path);
+		// try and remove xml elements gracefully
+		if(strpos($xml, '<!DOCTYPE') !== false) {
+			try{
+				$doc = new DOMDocument();
+				$doc->loadXML($xml, LIBXML_NOENT);
+				// remove doctype
+				$doc->removeChild($doc->doctype);
+				// on save, exclude xml declaration
+				$xml = $doc->saveXML($doc->documentElement, LIBXML_NOXMLDECL); // LIBXML_NOXMLDECL requires libxml 2.6.21
+			}
+			catch ( DOMException $e ){
+				echo '<!-- '.$e.' -->';
+			}
+		}
+		$dom_id = ( $id != '' ? ' id="' . $id . '"' : '' );
 		$css = ( $classes != '' ? 'inline-svg ' . $classes : 'inline-svg' );
 		ob_start();
 		?>
-			<span class="<?php echo $css; ?>">
+			<span<?php echo $dom_id; ?> class="<?php echo $css; ?>">
 				<?php
 				// readfile function is used here rather than require, include or get_template_part to prevent PHP code from being run
 				readfile($file_path);
@@ -27,6 +43,8 @@ function AJG_get_inline_svg($filename, $classes='', $rel_path='/img/svg/', $abs_
 			</span>
 		<?php
 		$markup = ob_get_clean();
+	else:
+		error_log( 'The requested SVG file: ' . $file_path . ' could not be found.' );
 	endif;
 	return $markup;
 }
